@@ -17,6 +17,20 @@ def clearscrn():
 def restart():
   python = sys.executable
   os.execl(python, python, *sys.argv)
+def import_quiz():
+  global quiz
+  with open('quiz.json') as file:
+    json_data = file.read()
+  quiz = json.loads(json_data)
+
+
+
+
+
+
+
+
+
 def export_quiz(quiz):
   jsonstr = json.dumps(quiz)
   file = open("quiz.json", "w")
@@ -142,9 +156,6 @@ print("1 - Play the default quiz")
 print("2 - Create a new quiz")
 print("3 - Import and play an existing quiz")
 
-
-
-
 # User selection of choice
 user_selection = input("Your selection (1/2/3): ").lower()
 # Selection
@@ -155,6 +166,6 @@ elif user_selection == "2":
   create_quiz()
   export_quiz(quiz)
 elif user_selection == "3":
-  print("Success")
+  import_quiz()
 else:
   print("Error")
