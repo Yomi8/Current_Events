@@ -7,9 +7,10 @@
   TIP: Use assessment guide to help guide you through this Internal
 '''
 # packages
+import json
 
 # functions
-
+  
 def create_quiz():
   # Makes quiz variable global
   global quiz
@@ -31,6 +32,7 @@ def create_quiz():
     answer = input(f"What is the correct answer for question {i+1}? ").strip().upper()
     # Organizes inputs into main quiz dictionary
     quiz[question] = {"IndexNum": i+1, "choices": lettered_choices, "answer": answer}
+
 
 def run_quiz(quiz):
   # Initialize score variable
@@ -87,6 +89,35 @@ def run_quiz(quiz):
         
 # main routine
 # Print options
+
+def export_quiz(quiz):
+  jsonstr = json.dumps(quiz)
+  file = open("quiz.json", "w")
+  file.write(jsonstr)
+  file.close()
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 print("#*#*#*# Quiz Creator #*#*#*#")
 print("OPTIONS")
 print("A - Play the default quiz")
@@ -100,7 +131,7 @@ if user_selection == "a":
   run_quiz(quiz)
 elif user_selection == "b":
   create_quiz()
-  print(quiz)
+  export_quiz(quiz)
 elif user_selection == "c":
   print("Success")
 else:
