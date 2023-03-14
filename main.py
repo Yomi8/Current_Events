@@ -8,10 +8,25 @@
 '''
 # packages
 import json
-
+import os, sys, time
 # functions
-  
+
+def clearscrn():
+  os.system('cls' if os.name == 'nt' else 'clear')
+
+def restart():
+  python = sys.executable
+  os.execl(python, python, *sys.argv)
+def export_quiz(quiz):
+  jsonstr = json.dumps(quiz)
+  file = open("quiz.json", "w")
+  file.write(jsonstr)
+  file.close()
+  print("Export Successful!")
+
 def create_quiz():
+  # Clear the console
+  clearscrn()
   # Makes quiz variable global
   global quiz
   # Creates quiz dictionary
@@ -33,13 +48,13 @@ def create_quiz():
     # Organizes inputs into main quiz dictionary
     quiz[question] = {"IndexNum": i+1, "choices": lettered_choices, "answer": answer}
 
-
 def run_quiz(quiz):
+  # Clear the console
+  clearscrn()
   # Initialize score variable
   score = 0
   # Sorts the questions into seperate list
   question_list = list(quiz.keys())
-  print(question_list)
   # Sorts other data into seperate list
   question_data_list = list(quiz.values())
   # Repeats for every question
@@ -66,7 +81,7 @@ def run_quiz(quiz):
     # Prints all avaliable options and their index letters
     for letter_index, full_answer in choices.items():
       print(letter_index, full_answer.capitalize())
-    # Asks for user input
+    # user input
     user_answer = input(f"Select your answer ({letter_index_output}): ").upper()
     # Checks user input against answer dictionary
     if user_answer in answer:
@@ -85,44 +100,28 @@ def run_quiz(quiz):
         print("Incorrect!")
       else:
         print("Error!")   
+  # Give user their score
+  clearscrn()
   print(f"You scored {score} out of {len(quiz)} questions!")
-        
+  time.sleep(5)
+  restart()
+  
+
+
+
+
+
 # main routine
 # Print options
-
-def export_quiz(quiz):
-  jsonstr = json.dumps(quiz)
-  file = open("quiz.json", "w")
-  file.write(jsonstr)
-  file.close()
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 print("#*#*#*# Quiz Creator #*#*#*#")
 print("OPTIONS")
 print("A - Play the default quiz")
 print("B - Create a new quiz")
 print("C - Import and play an existing quiz")
+
+
+
+
 # User selection of choice
 user_selection = input("Your selection (A/B/C): ").lower()
 # Selection
