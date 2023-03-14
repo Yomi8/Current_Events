@@ -47,6 +47,29 @@ def create_quiz():
     answer = input(f"What is the correct answer for question {i+1}? ").strip().upper()
     # Organizes inputs into main quiz dictionary
     quiz[question] = {"IndexNum": i+1, "choices": lettered_choices, "answer": answer}
+  # User decides outcome for quiz
+  clearscrn()
+  print("Quiz creation successful!")
+  print("What would you like to do?")
+  print("1 - Save quiz to file")
+  print("2 - Play quiz then save to file")
+  print("3 - Play quiz then discard")
+  print("4 - Discard quiz")
+  
+  user_selection = input("Selection (1/2/3/4)")
+  if user_selection == "1":
+    export_quiz(quiz)
+  elif user_selection == "2":
+    run_quiz(quiz)
+    export_quiz(quiz)
+  elif user_selection == "3":
+    run_quiz(quiz)
+    quiz = {}
+    restart()
+  elif user_selection == "4":
+    quiz = {}
+    restart()
+  
 
 def run_quiz(quiz):
   # Clear the console
@@ -115,23 +138,23 @@ def run_quiz(quiz):
 # Print options
 print("#*#*#*# Quiz Creator #*#*#*#")
 print("OPTIONS")
-print("A - Play the default quiz")
-print("B - Create a new quiz")
-print("C - Import and play an existing quiz")
+print("1 - Play the default quiz")
+print("2 - Create a new quiz")
+print("3 - Import and play an existing quiz")
 
 
 
 
 # User selection of choice
-user_selection = input("Your selection (A/B/C): ").lower()
+user_selection = input("Your selection (1/2/3): ").lower()
 # Selection
-if user_selection == "a":
+if user_selection == "1":
   quiz = {'What is the capital of New Zealand?': {'IndexNum': 1, 'choices': {'A': 'AUCKLAND', 'B': 'WELLINGTON', 'C': 'DUNEDIN'}, 'answer': 'WELLINGTON'}, 'What is the captial of France?': {'IndexNum': 2, 'choices': {'A': 'LONDON', 'B': 'BERLIN', 'C': 'PARIS'}, 'answer': 'PARIS'}, 'What is the capital of Japan?': {'IndexNum': 3, 'choices': {'A': 'BANGKOK', 'B': 'TOKYO', 'C': 'MOSCOW'}, 'answer': 'TOKYO'}}
   run_quiz(quiz)
-elif user_selection == "b":
+elif user_selection == "2":
   create_quiz()
   export_quiz(quiz)
-elif user_selection == "c":
+elif user_selection == "3":
   print("Success")
 else:
   print("Error")
