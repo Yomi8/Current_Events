@@ -19,17 +19,12 @@ def restart():
   os.execl(python, python, *sys.argv)
 def import_quiz():
   global quiz
-  with open('quiz.json') as file:
+  print("Please enter the file name of your quiz file (case-sensitive)")
+  print("Make sure you have spelled it correctly and that the file is in the same folder as this python script.")
+  filename = input()
+  with open(f'{filename}.json') as file:
     json_data = file.read()
   quiz = json.loads(json_data)
-
-
-
-
-
-
-
-
 
 def export_quiz(quiz):
   jsonstr = json.dumps(quiz)
@@ -150,6 +145,8 @@ def run_quiz(quiz):
 
 # main routine
 # Print options
+
+
 print("#*#*#*# Quiz Creator #*#*#*#")
 print("OPTIONS")
 print("1 - Play the default quiz")
@@ -160,12 +157,14 @@ print("3 - Import and play an existing quiz")
 user_selection = input("Your selection (1/2/3): ").lower()
 # Selection
 if user_selection == "1":
-  quiz = {'What is the capital of New Zealand?': {'IndexNum': 1, 'choices': {'A': 'AUCKLAND', 'B': 'WELLINGTON', 'C': 'DUNEDIN'}, 'answer': 'WELLINGTON'}, 'What is the captial of France?': {'IndexNum': 2, 'choices': {'A': 'LONDON', 'B': 'BERLIN', 'C': 'PARIS'}, 'answer': 'PARIS'}, 'What is the capital of Japan?': {'IndexNum': 3, 'choices': {'A': 'BANGKOK', 'B': 'TOKYO', 'C': 'MOSCOW'}, 'answer': 'TOKYO'}}
+  quiz = {'What is the capital of Japan?': {'IndexNum': 1, 'choices': {'A': 'BEIJING', 'B': 'SEOUL', 'C': 'TOKYO', 'D': 'HANOI'}, 'answer': 'TOKYO'}, 'Which of the following is the smallest planet in our solar system?': {'IndexNum': 2, 'choices': {'A': 'EATH', 'B': 'MARS', 'C': 'MERCURY', 'D': 'VENUS'}, 'answer': 'MERCURY'}, 'Which of the following is not a type of rock?': {'IndexNum': 3, 'choices': {'A': 'IGNEOUS', 'B': 'METAMORPHIC', 'C': 'SEDIMENTARY', 'D': 'ORGANIC'}, 'answer': 'ORGANIC'}, 'Who is the author of the Harry Potter series?': {'IndexNum': 4, 'choices': {'A': 'STEPHEN KING', 'B': 'JK ROWLING', 'C': 'SUZANNE COLLINS', 'D': 'GEORGE RR MARTIN'}, 'answer': 'JK ROWLING'}, 'What is the tallest mountain in the world?': {'IndexNum': 5, 'choices': {'A': 'MOUNT EVEREST', 'B': 'K2', 'C': 'MOUNT KILLIMANJARO', 'D': 'MOUNT DENALI'}, 'answer': 'MOUNT EVEREST'}, 'Which of the following is a programming language?': {'IndexNum': 6, 'choices': {'A': 'HTML', 'B': 'XML', 'C': 'JAVA', 'D': 'SQL'}, 'answer': 'JAVA'}, 'Who invented the telephone?': {'IndexNum': 7, 'choices': {'A': 'ALEXANDER GRAHAM BELL', 'B': 'THOMAS EDISON', 'C': 'ALBERT EINSTEIN', 'D': 'ISAAC NEWTON'}, 'answer': ''}, 'What is the largest country by land area?': {'IndexNum': 8, 'choices': {'A': 'UNITED STATES', 'B': 'RUSSIA', 'C': 'CHINA', 'D': 'CANADA'}, 'answer': 'RUSSIA'}, 'Which of the following is not a type of cloud?': {'IndexNum': 9, 'choices': {'A': 'STRATUS', 'B': 'CIRRUS', 'C': 'NIMBUS', 'D': 'HAZE'}, 'answer': 'HAZE'}, 'Who was the first man to walk on the moon?': {'IndexNum': 10, 'choices': {'A': 'NEIL ARMSTRONG', 'B': 'BUZZ ALDRIN', 'C': 'YURI GAGARIN', 'D': 'JOHN GLENN'}, 'answer': 'NEIL ARMSTRONG'}, 'What is the chemical symbol for gold?': {'IndexNum': 11, 'choices': {'A': 'AU', 'B': 'AG', 'C': 'CU', 'D': 'PT'}, 'answer': 'AU'}, 'Which of the following is not a type of dance?': {'IndexNum': 12, 'choices': {'A': 'SALSA', 'B': 'WALTZ', 'C': 'TANGO', 'D': 'RUMBA'}, 'answer': 'RUMBA'}, 'Which of the following is a type of pasta?': {'IndexNum': 13, 'choices': {'A': 'LASAGNA', 'B': 'BURRITO', 'C': 'SUSHI', 'D': 'FALAFEL'}, 'answer': 'LASAGNA'}, 'What is the currency of India?': {'IndexNum': 14, 'choices': {'A': 'RUPEE', 'B': 'YEN', 'C': 'EURO', 'D': 'POUND'}, 'answer': 'RUPEE'}, 'Which of the following is a type of whale?': {'IndexNum': 15, 'choices': {'A': 'DOLPHIN', 'B': 'NARWHAL', 'C': 'ORCA', 'D': 'WALRUS'}, 'answer': 'NARWHAL'}, 'Which of the following is not a type of fish?': {'IndexNum': 16, 'choices': {'A': 'TUNA', 'B': 'SALMON', 'C': 'DOLPHIN', 'D': 'COD'}, 'answer': 'DOLPHIN'}, 'Which of the following is not a type of dinosaur?': {'IndexNum': 17, 'choices': {'A': 'T-REX', 'B': 'STEGOSAURUS', 'C': 'PTERODACTYL', 'D': 'SABERTOOTH'}, 'answer': 'SABERTOOTH'}, 'Which of the following is a type of fruit?': {'IndexNum': 18, 'choices': {'A': 'CUCUMBER', 'B': 'EGGPLANT', 'C': 'TOMATO', 'D': 'STRAWBERRY'}, 'answer': 'STRAWBERRY'}, 'Which of the following is not a type of tree?': {'IndexNum': 19, 'choices': {'A': 'OAK', 'B': 'PINE', 'C': 'MAPLE', 'D': 'CORAL'}, 'answer': 'CORAL'}, "Who directed the movie 'Jaws'?": {'IndexNum': 20, 'choices': {'A': 'STEVEN SPIELBURG', 'B': 'MARTIN SCORSESE', 'C': 'QUENTIN TARANTINO', 'D': 'FRANCIS FORD COPPOLA'}, 'answer': 'STEVEN SPIELBURG'}}
   run_quiz(quiz)
 elif user_selection == "2":
   create_quiz()
   export_quiz(quiz)
 elif user_selection == "3":
   import_quiz()
+  run_quiz(quiz)
+  restart()
 else:
   print("Error")
