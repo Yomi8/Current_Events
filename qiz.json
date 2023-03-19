@@ -2,50 +2,50 @@
     "What is the capital of Japan?": {
         "IndexNum": 1,
         "choices": {
-            "A": "BEIJING",
-            "B": "SEOUL",
-            "C": "TOKYO",
-            "D": "HANOI"
+            "A": "Beijing",
+            "B": "Seoul",
+            "C": "Tokyo",
+            "D": "Hanoi"
         },
         "answer": "TOKYO"
     },
     "Which of the following is the smallest planet in our solar system?": {
         "IndexNum": 2,
         "choices": {
-            "A": "EATH",
-            "B": "MARS",
-            "C": "MERCURY",
-            "D": "VENUS"
+            "A": "Earth",
+            "B": "Mars",
+            "C": "Mercury",
+            "D": "Venus"
         },
         "answer": "MERCURY"
     },
     "Which of the following is not a type of rock?": {
         "IndexNum": 3,
         "choices": {
-            "A": "IGNEOUS",
-            "B": "METAMORPHIC",
-            "C": "SEDIMENTARY",
-            "D": "ORGANIC"
+            "A": "Igneous",
+            "B": "Metamorphic",
+            "C": "Sedimentary",
+            "D": "Organic"
         },
         "answer": "ORGANIC"
     },
     "Who is the author of the Harry Potter series?": {
         "IndexNum": 4,
         "choices": {
-            "A": "STEPHEN KING",
-            "B": "JK ROWLING",
-            "C": "SUZANNE COLLINS",
-            "D": "GEORGE RR MARTIN"
+            "A": "Stephen King",
+            "B": "JK Rowling",
+            "C": "Suzanne Collins",
+            "D": "George RR Martin"
         },
         "answer": "JK ROWLING"
     },
     "What is the tallest mountain in the world?": {
         "IndexNum": 5,
         "choices": {
-            "A": "MOUNT EVEREST",
+            "A": "Mount Everest",
             "B": "K2",
-            "C": "MOUNT KILLIMANJARO",
-            "D": "MOUNT DENALI"
+            "C": "Mount Kilimanjaro",
+            "D": "Mount Denali"
         },
         "answer": "MOUNT EVEREST"
     },
@@ -54,7 +54,7 @@
         "choices": {
             "A": "HTML",
             "B": "XML",
-            "C": "JAVA",
+            "C": "Java",
             "D": "SQL"
         },
         "answer": "JAVA"
@@ -62,140 +62,140 @@
     "Who invented the telephone?": {
         "IndexNum": 7,
         "choices": {
-            "A": "ALEXANDER GRAHAM BELL",
-            "B": "THOMAS EDISON",
-            "C": "ALBERT EINSTEIN",
-            "D": "ISAAC NEWTON"
+            "A": "Alexander Graham Bell",
+            "B": "Thomas Edison",
+            "C": "Albert Einstein",
+            "D": "Isaac Newton"
         },
-        "answer": ""
+        "answer": "ALEXANDER GRAHAM BELL"
     },
     "What is the largest country by land area?": {
         "IndexNum": 8,
         "choices": {
-            "A": "UNITED STATES",
-            "B": "RUSSIA",
-            "C": "CHINA",
-            "D": "CANADA"
+            "A": "United States",
+            "B": "Russia",
+            "C": "China",
+            "D": "Canada"
         },
         "answer": "RUSSIA"
     },
     "Which of the following is not a type of cloud?": {
         "IndexNum": 9,
         "choices": {
-            "A": "STRATUS",
-            "B": "CIRRUS",
-            "C": "NIMBUS",
-            "D": "HAZE"
+            "A": "Stratus",
+            "B": "Cirrus",
+            "C": "Nimbus",
+            "D": "Haze"
         },
         "answer": "HAZE"
     },
     "Who was the first man to walk on the moon?": {
         "IndexNum": 10,
         "choices": {
-            "A": "NEIL ARMSTRONG",
-            "B": "BUZZ ALDRIN",
-            "C": "YURI GAGARIN",
-            "D": "JOHN GLENN"
+            "A": "Neil Armstrong",
+            "B": "Buzz Aldrin",
+            "C": "Yuri Gagarin",
+            "D": "John Glenn"
         },
         "answer": "NEIL ARMSTRONG"
     },
     "What is the chemical symbol for gold?": {
         "IndexNum": 11,
         "choices": {
-            "A": "AU",
-            "B": "AG",
-            "C": "CU",
-            "D": "PT"
+            "A": "Au",
+            "B": "Ag",
+            "C": "Cu",
+            "D": "Pt"
         },
         "answer": "AU"
     },
     "Which of the following is not a type of dance?": {
         "IndexNum": 12,
         "choices": {
-            "A": "SALSA",
-            "B": "WALTZ",
-            "C": "TANGO",
-            "D": "RUMBA"
+            "A": "Salsa",
+            "B": "Waltz",
+            "C": "Tango",
+            "D": "Rumba"
         },
         "answer": "RUMBA"
     },
     "Which of the following is a type of pasta?": {
         "IndexNum": 13,
         "choices": {
-            "A": "LASAGNA",
-            "B": "BURRITO",
-            "C": "SUSHI",
-            "D": "FALAFEL"
+            "A": "Lasagna",
+            "B": "Burrito",
+            "C": "Sushi",
+            "D": "Falafel"
         },
         "answer": "LASAGNA"
     },
     "What is the currency of India?": {
         "IndexNum": 14,
         "choices": {
-            "A": "RUPEE",
-            "B": "YEN",
-            "C": "EURO",
-            "D": "POUND"
+            "A": "Rupee",
+            "B": "Yen",
+            "C": "Euro",
+            "D": "Pound"
         },
         "answer": "RUPEE"
     },
     "Which of the following is a type of whale?": {
         "IndexNum": 15,
         "choices": {
-            "A": "DOLPHIN",
-            "B": "NARWHAL",
-            "C": "ORCA",
-            "D": "WALRUS"
+            "A": "Dolphin",
+            "B": "Narwhal",
+            "C": "Orca",
+            "D": "Walrus"
         },
         "answer": "NARWHAL"
     },
     "Which of the following is not a type of fish?": {
         "IndexNum": 16,
         "choices": {
-            "A": "TUNA",
-            "B": "SALMON",
-            "C": "DOLPHIN",
-            "D": "COD"
+            "A": "Tuna",
+            "B": "Salmon",
+            "C": "Dolphin",
+            "D": "Cod"
         },
         "answer": "DOLPHIN"
     },
     "Which of the following is not a type of dinosaur?": {
         "IndexNum": 17,
         "choices": {
-            "A": "T-REX",
-            "B": "STEGOSAURUS",
-            "C": "PTERODACTYL",
-            "D": "SABERTOOTH"
+            "A": "T-Rex",
+            "B": "Stegosaurus",
+            "C": "Pterodactyl",
+            "D": "Sabertooth"
         },
         "answer": "SABERTOOTH"
     },
     "Which of the following is a type of fruit?": {
         "IndexNum": 18,
         "choices": {
-            "A": "CUCUMBER",
-            "B": "EGGPLANT",
-            "C": "TOMATO",
-            "D": "STRAWBERRY"
+            "A": "Cucumber",
+            "B": "Eggplant",
+            "C": "Tomato",
+            "D": "Strawberry"
         },
         "answer": "STRAWBERRY"
     },
     "Which of the following is not a type of tree?": {
         "IndexNum": 19,
         "choices": {
-            "A": "OAK",
-            "B": "PINE",
-            "C": "MAPLE",
-            "D": "CORAL"
+            "A": "Oak",
+            "B": "Pine",
+            "C": "Maple",
+            "D": "Coral"
         },
         "answer": "CORAL"
     },
     "Who directed the movie 'Jaws'?": {
         "IndexNum": 20,
         "choices": {
-            "A": "STEVEN SPIELBURG",
-            "B": "MARTIN SCORSESE",
-            "C": "QUENTIN TARANTINO",
-            "D": "FRANCIS FORD COPPOLA"
+            "A": "Steven Spielberg",
+            "B": "Martin Scorsese",
+            "C": "Quentin Tarantino",
+            "D": "Francis Ford Coppola"
         },
         "answer": "STEVEN SPIELBURG"
     }
