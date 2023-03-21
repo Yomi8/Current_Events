@@ -17,15 +17,20 @@ def clearscrn():
 def restart():
   python = sys.executable
   os.execl(python, python, *sys.argv)
+
 def import_quiz():
   global quiz
-  print("Please enter the file name of your quiz file (case-sensitive)")
-  print("Make sure you have spelled it correctly and that the file is in the same folder as this python script.")
-  filename = input()
-  with open(f'{filename}.json') as file:
-    json_data = file.read()
-  quiz = json.loads(json_data)
-
+  while True:
+    print("Please enter the file name of your quiz file (case-sensitive)")
+    print("Make sure you have spelled it correctly and that the file is in the same folder as this python script.")
+    filename = input()
+    try:
+      with open(f'{filename}.json') as file:
+        json_data = file.read()
+      quiz = json.loads(json_data)
+      break
+    except(NameError,FileNotFoundError):
+      print("The quiz file was not found. Please try again and make sure you spelled the file name correctly and the file is in the right folder.")
 def export_quiz(quiz):
   jsonstr = json.dumps(quiz)
   file = open("quiz.json", "w")
@@ -45,18 +50,33 @@ def create_quiz():
   question_amount = int(input("How many questions do you want in your quiz? "))
   # Loops for the amount of questions a user wants
   for i in range(question_amount):
-    # Asks user for question
-    question = input(f"Enter question {i+1}: ")
-    # Asks user for choices for question
-    choices = input(f"Enter the answer choices for question {i+1}, separated by commas: ").split(",")
-    lettered_choices = {}
-    # Gives an index letter (A - Z) for each choice
-    for index, choice in enumerate(choices):
-      lettered_choices[chr(ord('A') + index)] = choice.strip()
-    # Asks user for correct answer to question
-    answer = input(f"What is the correct answer for question {i+1}? ").strip().upper()
-    # Organizes inputs into main quiz dictionary
-    quiz[question] = {"IndexNum": i+1, "choices": lettered_choices, "answer": answer}
+      # Asks user for question
+      question = input(f"Enter question {i+1}: ")
+      # Asks user for choices for question
+      while True:
+        choices = input(f"Enter the answer choices for question {i+1}, separated by commas: ").split(",")
+        if len(choices) > 26:
+          print("You have entered more than 26 choices which means each choice cannot be assigned it's own letter. Please consider lowering the amount of choices in this particular question and try again.")
+        else:
+          break
+      lettered_choices = {}
+      # Gives an index letter (A - Z) for each choice
+      for index, choice in enumerate(choices):
+          lettered_choices[chr(ord('A') + index)] = choice.strip()
+      while True:
+        # Asks user for correct answer to question
+        answer = input(f"What is the correct answer for question {i+1}? ").strip().upper()
+        
+        # Check if the answer key is in the lettered_choices dictionary
+        if answer in lettered_choices.values():
+          # Get the index letter corresponding to the answer value
+          correct_choice = [key for key, value in lettered_choices.items() if value == answer][0]
+          # Organizes inputs into main quiz dictionary
+          quiz[question] = {"IndexNum": i+1, "choices": lettered_choices, "answer": correct_choice}
+          break
+        else:
+          print("The answer key is not one of the answer choices given. Please try again.")
+        
   # User decides outcome for quiz
   clearscrn()
   print("Quiz creation successful!")
@@ -105,56 +125,73 @@ def run_quiz(quiz):
     letter_index_output = '/'.join(letter_indexs_list)
     # Seperates answer into it's own dictionary
     long_answer = question_data_list[question_list.index(question)]['answer']
+    matching_index = 0
     for index, value in upper_choices.items():
       if value == long_answer:
           matching_index = index
           break
     answer = {matching_index:long_answer}
-    # Prints the question number and question itself
+    # Print Question info
     print(f"\nQuestion {question_num}:")
     print(question)
-    # Prints all avaliable options and their index letters
+    # Print all avaliable options and their index letters
     for letter_index, full_answer in choices.items():
       print(letter_index, full_answer)
-    # user input
-    user_answer = input(f"Select your answer ({letter_index_output}): ").upper()
-    # Checks user input against answer dictionary
-    if user_answer in answer:
-      print("Correct!")
-      score += 1
-    elif user_answer in answer.values():
-      print("Correct!")
-      score += 1
-    elif user_answer not in answer:
-      if user_answer in choices:
-        print("Incorrect!")
-      else:
-        print("Error!")
-    elif user_answer not in answer.values():
-      if user_answer in choices.values():
-        print("Incorrect!")
-      else:
-        print("Error!")   
-  # Give user their score
+    # User answer and checking
+    while True:
+        user_answer = input(f"Select your answer ({letter_index_output}): ").upper()
+        # Checks user input against answer dictionary
+        # Index answer (Correct)
+        if user_answer in answer:
+          clearscrn()
+          print("Correct!")
+          score += 1
+          break
+        # Long answer (Correct)
+        elif user_answer in answer.values():
+          clearscrn()
+          print("Correct!")
+          score += 1
+          break
+        # Answer is not correct
+        elif user_answer not in answer:
+          # Same as index choices (Incorrect)
+          if user_answer in upper_choices:
+            clearscrn()
+            print("Incorrect!")
+            break
+          # Same as long answer choices (Incorrect)
+          elif user_answer in upper_choices.values():
+            clearscrn()
+            print("Incorrect!")
+            break
+          # Not the same as anything provided (Error)
+          else:
+            print("Your response was not any of the choices listed, please try again by choosing one of the choices listed.")
+
+  # User Score
   clearscrn()
   print(f"You scored {score} out of {len(quiz)} questions!")
-  time.sleep(5)
+  time.sleep(2)
   restart()
 
-# main routine
-# Print options
 
+
+# main routine
+# Options printout
 print("#*#*#*# Quiz Creator #*#*#*#")
 print("OPTIONS")
 print("1 - Play the default quiz")
 print("2 - Create a new quiz")
 print("3 - Import and play an existing quiz")
 
-# User selection of choice
-user_selection = input("Your selection (1/2/3): ").lower()
-# Selection
-if user_selection == "1":
-  quiz = {
+
+while True:
+  # User selection of choice
+  user_selection = input("Your selection (1/2/3): ")
+  # Selection outputs
+  if user_selection == "1":
+    quiz = {
     "What is the capital of Japan?": {
         "IndexNum": 1,
         "choices": {
@@ -356,13 +393,15 @@ if user_selection == "1":
         "answer": "STEVEN SPIELBURG"
     }
 }
-  run_quiz(quiz)
-elif user_selection == "2":
-  create_quiz()
-  export_quiz(quiz)
-elif user_selection == "3":
-  import_quiz()
-  run_quiz(quiz)
-  restart()
-else:
-  print("Error")
+    run_quiz(quiz)
+    break
+  elif user_selection == "2":
+    create_quiz()
+    break
+  elif user_selection == "3":
+    import_quiz()
+    run_quiz(quiz)
+    restart()
+    break
+  else:
+    print("Invaild Input. Please try again with a correct input.")
