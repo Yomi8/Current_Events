@@ -26,9 +26,9 @@ def import_quiz():
   print("#*#*#*# Importing #*#*#*#")
   while True:
     # User instructions
-    print("Please enter the file name of your quiz file (case-sensitive)")
-    print("Make sure you have spelled it correctly and that the file is in the same folder as this python script.")
-    filename = input()
+    print("Please enter the file name of your quiz file")
+    print("Make sure the file is in the same folder as this python script.")
+    filename = input().lower()
     try:
       # Try to open filename provided
       with open(f'{filename}.json') as file:
@@ -103,20 +103,30 @@ def create_quiz():
   print("2 - Play quiz then save to file")
   print("3 - Play quiz then discard")
   print("4 - Discard quiz")
-  
-  user_selection = input("Selection (1/2/3/4)")
-  if user_selection == "1":
-    export_quiz(quiz)
-  elif user_selection == "2":
-    run_quiz(quiz)
-    export_quiz(quiz)
-  elif user_selection == "3":
-    run_quiz(quiz)
-    quiz = {}
-    restart()
-  elif user_selection == "4":
-    quiz = {}
-    restart()
+
+  while True:
+    user_selection = input("Selection (1/2/3/4): ")
+    if user_selection == "1":
+      export_quiz(quiz)
+      break
+    elif user_selection == "2":
+      run_quiz(quiz)
+      export_quiz(quiz)
+      break
+    elif user_selection == "3":
+      run_quiz(quiz)
+      quiz = {}
+      print("Quiz has been removed from memory")
+      time.sleep(2)
+      break
+    elif user_selection == "4":
+      quiz = {}
+      print("Quiz has been removed from memory")
+      time.sleep(2)
+      break
+    else:
+      print("No valid selection was chosen. Please try again.")
+  restart()
   
 
 def run_quiz(quiz):
@@ -191,7 +201,6 @@ def run_quiz(quiz):
   clearscrn()
   print(f"You scored {score} out of {len(quiz)} questions!")
   time.sleep(2)
-  restart()
 
 
 
@@ -413,7 +422,7 @@ while True:
     }
 }
     run_quiz(quiz)
-    break
+    restart()
   elif user_selection == "2":
     create_quiz()
     break
