@@ -9,35 +9,53 @@
 # packages
 import json
 import os, sys, time
-# functions
 
+# functions
 def clearscrn():
   os.system('cls' if os.name == 'nt' else 'clear')
 
 def restart():
+  # Restart the program
   python = sys.executable
   os.execl(python, python, *sys.argv)
 
 def import_quiz():
   global quiz
+  # Title
+  clearscrn()
+  print("#*#*#*# Importing #*#*#*#")
   while True:
+    # User instructions
     print("Please enter the file name of your quiz file (case-sensitive)")
     print("Make sure you have spelled it correctly and that the file is in the same folder as this python script.")
     filename = input()
     try:
+      # Try to open filename provided
       with open(f'{filename}.json') as file:
         json_data = file.read()
       quiz = json.loads(json_data)
       break
     except(NameError,FileNotFoundError):
+      # User error printout
       print("The quiz file was not found. Please try again and make sure you spelled the file name correctly and the file is in the right folder.")
+
 def export_quiz(quiz):
-  jsonstr = json.dumps(quiz)
-  file = open("quiz.json", "w")
-  file.write(jsonstr)
-  file.close()
-  print("Export Successful!")
-  print("File saved as quiz.json")
+  clearscrn()
+  print("#*#*#*# Exporting #*#*#*#")
+  while True:
+    print("Exporting...")
+    time.sleep(1)
+    try:
+      jsonstr = json.dumps(quiz)
+      file = open("quiz.json", "w")
+      file.write(jsonstr)
+      file.close()
+      print("Export Successful!")
+      print("File saved as quiz.json")
+      time.sleep(2)
+      break
+    except:
+      print("Export was not successful, retrying")
 
 def create_quiz():
   # Clear the console
@@ -177,8 +195,9 @@ def run_quiz(quiz):
 
 
 
-# main routine
-# Options printout
+
+# Main routine
+clearscrn()
 print("#*#*#*# Quiz Creator #*#*#*#")
 print("OPTIONS")
 print("1 - Play the default quiz")
