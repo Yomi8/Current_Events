@@ -59,8 +59,11 @@ def export_quiz(quiz):
       print("Export was not successful, retrying")
 
 def create_quiz():
-  # Clear the console
-  clearscrn()
+  # Title
+  def quiz_creater_title():
+    clearscrn()
+    print("#*#*#*# Quiz Creator #*#*#*#")
+  quiz_creater_title()
   # Makes quiz variable global
   global quiz
   # Creates quiz dictionary
@@ -74,6 +77,8 @@ def create_quiz():
       print("Please enter an appropriate value, (e.g. 1, 10, 17)")
   # Loops for the amount of questions a user wants
   for i in range(question_amount):
+      # Title
+      quiz_creater_title()
       # Asks user for question
       question = input(f"Enter question {i+1}: ")
       # Asks user for choices for question
@@ -105,7 +110,7 @@ def create_quiz():
           print("The answer key is not one of the answer choices given. Please try again.")
         
   # User decides outcome for quiz
-  clearscrn()
+  quiz_creater_title()
   print("Quiz creation successful!")
   print("What would you like to do?")
   print("1 - Save quiz to file")
@@ -139,6 +144,10 @@ def create_quiz():
   
 
 def run_quiz(quiz):
+  # Title function
+  def quiz_player_title():
+    clearscrn()
+    print("#*#*#*# Quiz Player #*#*#*#")
   # Clear the console
   clearscrn()
   # Initialize score variable
@@ -149,6 +158,7 @@ def run_quiz(quiz):
   question_data_list = list(quiz.values())
   # Repeats for every question
   for question in question_list:
+    quiz_player_title()
     # Setup of variables for use later
     # Seperates the Index Numbver of a question into a variable
     question_num = question_data_list[question_list.index(question)]['IndexNum']
@@ -169,14 +179,14 @@ def run_quiz(quiz):
           break
     answer = {matching_index:long_answer}
     # Print Question info
-    print(f"\nQuestion {question_num}:")
-    print(question)
+    print(f"\nQuestion {question_num}:\n")
+    print(f"{question}\n")
     # Print all avaliable options and their index letters
     for letter_index, full_answer in choices.items():
       print(letter_index, full_answer)
     # User answer and checking
     while True:
-        user_answer = input(f"Select your answer ({letter_index_output}): ").upper()
+        user_answer = input(f"\nSelect your answer ({letter_index_output}): ").upper()
         # Checks user input against answer dictionary
         # Index answer (Correct)
         if user_answer in answer:
@@ -207,7 +217,7 @@ def run_quiz(quiz):
             print("Your response was not any of the choices listed, please try again by choosing one of the choices listed.")
 
   # User Score
-  clearscrn()
+  quiz_player_title()
   print(f"You scored {score} out of {len(quiz)} questions!")
   time.sleep(2)
 
@@ -216,7 +226,7 @@ def run_quiz(quiz):
 
 # Main routine
 clearscrn()
-print("#*#*#*# Quiz Creator #*#*#*#")
+print("#*#*#*# Quizzing #*#*#*#")
 print("OPTIONS")
 print("1 - Play the default quiz")
 print("2 - Create a new quiz")
@@ -225,7 +235,7 @@ print("3 - Import and play an existing quiz")
 
 while True:
   # User selection of choice
-  user_selection = input("Your selection (1/2/3): ")
+  user_selection = input("\nYour selection (1/2/3): ")
   # Selection outputs
   if user_selection == "1":
     quiz = {
