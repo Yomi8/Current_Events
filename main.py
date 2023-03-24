@@ -9,6 +9,7 @@
 # packages
 import json
 import os, sys, time
+import re
 
 # functions
 def clearscrn():
@@ -65,14 +66,19 @@ def create_quiz():
   # Creates quiz dictionary
   quiz = {}
   # Asks user for amount of questions
-  question_amount = int(input("How many questions do you want in your quiz? "))
+  while True:
+    try:
+      question_amount = int(input("How many questions do you want in your quiz? "))
+      break
+    except(ValueError):
+      print("Please enter an appropriate value, (e.g. 1, 10, 17)")
   # Loops for the amount of questions a user wants
   for i in range(question_amount):
       # Asks user for question
       question = input(f"Enter question {i+1}: ")
       # Asks user for choices for question
       while True:
-        choices = input(f"Enter the answer choices for question {i+1}, separated by commas: ").split(",")
+        choices = re.sub(r',\s+', ',',input(f"Enter the answer choices for question {i+1}, separated by commas: ")).split(",")
         if len(choices) > 26:
           print("You have entered more than 26 choices which means each choice cannot be assigned it's own letter. Please consider lowering the amount of choices in this particular question and try again.")
         else:
@@ -84,9 +90,12 @@ def create_quiz():
       while True:
         # Asks user for correct answer to question
         answer = input(f"What is the correct answer for question {i+1}? ").strip().upper()
-        
-        # Check if the answer key is in the lettered_choices dictionary
-        if answer in lettered_choices.values():
+        # Creates lettered choices dictionary but uppercase for answer checking
+        lettered_choices_upper = lettered_choices
+        for key in lettered_choices_upper:
+          lettered_choices_upper[key] = lettered_choices_upper[key].upper()
+        # Check if the answer key is in the lettered_choices_upper dictionary
+        if answer in lettered_choices_upper.values():
           # Get the index letter corresponding to the answer value
           correct_choice = [key for key, value in lettered_choices.items() if value == answer][0]
           # Organizes inputs into main quiz dictionary
