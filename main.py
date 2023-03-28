@@ -107,7 +107,7 @@ def create_quiz():
           # Get the index letter corresponding to the answer value
           correct_choice = [key for key, value in lettered_choices_upper.items() if value == answer][0]
           # Organizes inputs into main quiz dictionary
-          quiz[question] = {"IndexNum": i+1, "choices": lettered_choices, "answer": correct_choice}
+          quiz[question] = {"IndexNum": i+1, "choices": lettered_choices, "answer": correct_choice, "scores": {}}
           break
         else:
           print("The answer key is not one of the answer choices given. Please try again.")
@@ -159,7 +159,7 @@ def run_quiz(quiz):
   # Seperates imported quiz into different lists
   question_list = list(quiz.keys())
   question_data_list = list(quiz.values())
-  
+  question_list.remove('scores')
   # Repeat for every question
   for question in question_list:
     # Title and last answer printout
@@ -220,8 +220,22 @@ def run_quiz(quiz):
 
   # User Score
   quiz_player_title()
-  print(f"You scored {score} out of {len(quiz)} questions!")
-  time.sleep(2)
+  print(f"You scored {score} out of {len(quiz)-1} questions!")
+  print("\nWould you like to save your score to the quiz?")
+  while True:
+    score_input = input("\nYour selection (y/n): ")
+    if score_input == "y":
+      username = str(input("Please enter your name: " ))
+      quiz['scores'][username] = score
+      export_quiz(quiz)
+      break
+    if score_input == "n":
+      print("Skipping score saving...")
+      time.sleep(2)
+      break
+    else:
+       print("Invalid input! Please enter a valid input (y/n).") 
+
 
 
 
@@ -456,6 +470,9 @@ while True:
             "D": "Francis Ford Coppola"
         },
         "answer": "STEVEN SPIELBURG"
+    },
+    "scores": {
+      
     }
 }
     run_quiz(quiz)
