@@ -59,16 +59,19 @@ def export_quiz(quiz):
       print("Export was not successful, retrying")
 
 def create_quiz():
-  # Title
-  def quiz_creater_title():
+  # Title function
+  def quiz_creater_title(num, total):
     clearscrn()
-    print("#*#*#*# Quiz Creator #*#*#*#")
-  quiz_creater_title()
-  # Makes quiz variable global
+    if num is not None:
+      print("#*#*#*# Quiz Creator #*#*#*#")
+      print(f"Question {num+1} out of {total}")
+    else:
+      print("#*#*#*# Quiz Creator #*#*#*#")      
+  quiz_creater_title(None, None)
+  # Quiz variable setup
   global quiz
-  # Creates quiz dictionary
   quiz = {}
-  # Asks user for amount of questions
+  # Number of questions input
   while True:
     try:
       question_amount = int(input("How many questions do you want in your quiz? "))
@@ -78,7 +81,7 @@ def create_quiz():
   # Loops for the amount of questions a user wants
   for i in range(question_amount):
       # Title
-      quiz_creater_title()
+      quiz_creater_title(i, question_amount)
       # Asks user for question
       question = input(f"Enter question {i+1}: ")
       # Asks user for choices for question
@@ -185,11 +188,11 @@ def run_quiz(quiz):
     print(f"\nQuestion {question_num}:\n")
     print(f"{question}\n")
     for letter_index, full_answer in choices.items():
-      print(letter_index, full_answer)
+      print(f"{letter_index} - {full_answer}")
 
     # User answer and checking
     while True:
-        user_answer = input(f"\nSelect your answer ({letter_index_output}): ").upper()
+        user_answer = input(f"\nSelect your answer ({letter_index_output}):").upper()
         # Checks user input against answer dictionary
         # Index answer (Correct)
         if user_answer in answer:
