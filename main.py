@@ -95,14 +95,14 @@ def create_quiz():
       while True:
         # Asks user for correct answer to question
         answer = input(f"What is the correct answer for question {i+1}? ").strip().upper()
-        # Creates lettered choices dictionary but uppercase for answer checking
-        lettered_choices_upper = lettered_choices
-        for key in lettered_choices_upper:
-          lettered_choices_upper[key] = lettered_choices_upper[key].upper()
+        # Copies lettered choices dictionary and makes copy uppercase for answer checking
+        lettered_choices_upper = lettered_choices.copy()
+        for key in lettered_choices:
+          lettered_choices_upper[key] = lettered_choices[key].upper()
         # Check if the answer key is in the lettered_choices_upper dictionary
         if answer in lettered_choices_upper.values():
           # Get the index letter corresponding to the answer value
-          correct_choice = [key for key, value in lettered_choices.items() if value == answer][0]
+          correct_choice = [key for key, value in lettered_choices_upper.items() if value == answer][0]
           # Organizes inputs into main quiz dictionary
           quiz[question] = {"IndexNum": i+1, "choices": lettered_choices, "answer": correct_choice}
           break
@@ -148,29 +148,31 @@ def run_quiz(quiz):
   def quiz_player_title():
     clearscrn()
     print("#*#*#*# Quiz Player #*#*#*#")
-  # Clear the console
-  clearscrn()
-  # Initialize score variable
+
+  # Initialize variables
   score = 0
-  # Sorts the questions into seperate list
+  last_answer = None
+
+  # Seperates imported quiz into different lists
   question_list = list(quiz.keys())
-  # Sorts other data into seperate list
   question_data_list = list(quiz.values())
-  # Repeats for every question
+  
+  # Repeat for every question
   for question in question_list:
-    quiz_player_title()
+    # Title and last answer printout
+    if last_answer is not None:
+      quiz_player_title()
+      print(f"Last answer was {last_answer}")
+    else:
+      quiz_player_title()
+
     # Setup of variables for use later
-    # Seperates the Index Numbver of a question into a variable
+    # Creates seperate dictionaries and variables for contents of quiz lists
     question_num = question_data_list[question_list.index(question)]['IndexNum']
-    # Seperates choices dictionary into a variable
     choices = question_data_list[question_list.index(question)]['choices']
-    # Copies the choices dictionary for use in checking answers in all caps
     upper_choices = {key: value.upper() if isinstance(value, str) else value for key, value in choices.items()}
-    # Seperates keys of the choices dictionary into a list
     letter_indexs_list = [key for key in choices]
-    # Creates a usable output for the choices keys
     letter_index_output = '/'.join(letter_indexs_list)
-    # Seperates answer into it's own dictionary
     long_answer = question_data_list[question_list.index(question)]['answer']
     matching_index = 0
     for index, value in upper_choices.items():
@@ -178,39 +180,36 @@ def run_quiz(quiz):
           matching_index = index
           break
     answer = {matching_index:long_answer}
+    
     # Print Question info
     print(f"\nQuestion {question_num}:\n")
     print(f"{question}\n")
-    # Print all avaliable options and their index letters
     for letter_index, full_answer in choices.items():
       print(letter_index, full_answer)
+
     # User answer and checking
     while True:
         user_answer = input(f"\nSelect your answer ({letter_index_output}): ").upper()
         # Checks user input against answer dictionary
         # Index answer (Correct)
         if user_answer in answer:
-          clearscrn()
-          print("Correct!")
+          last_answer = "correct!"
           score += 1
           break
         # Long answer (Correct)
         elif user_answer in answer.values():
-          clearscrn()
-          print("Correct!")
+          last_answer = "correct!"
           score += 1
           break
         # Answer is not correct
         elif user_answer not in answer:
           # Same as index choices (Incorrect)
           if user_answer in upper_choices:
-            clearscrn()
-            print("Incorrect!")
+            last_answer = "incorrect!"
             break
           # Same as long answer choices (Incorrect)
           elif user_answer in upper_choices.values():
-            clearscrn()
-            print("Incorrect!")
+            last_answer = "incorrect!"
             break
           # Not the same as anything provided (Error)
           else:
@@ -226,6 +225,21 @@ def run_quiz(quiz):
 
 # Main routine
 clearscrn()
+print("  _.--,-```-.    ")
+print(" /    /      '.  ")
+print("/____/         ; ")
+print("\    \  .``-    '")
+print(" \ ___\/    \   :")
+print("       \    :   |")
+print("       |    ;  . ")
+print("      ;   ;   :  ")
+print("     /   :   :   ")
+print("     `---'.  |   ")
+print("      `--..`;    ")
+print("    .--,_        ")
+print("    |    |`.     ")
+print("    `-- -`, ;    ")
+print("      '---``     ")
 print("#*#*#*# Quizzing #*#*#*#")
 print("OPTIONS")
 print("1 - Play the default quiz")
@@ -237,6 +251,7 @@ while True:
   # User selection of choice
   user_selection = input("\nYour selection (1/2/3): ")
   # Selection outputs
+  # Default Quiz
   if user_selection == "1":
     quiz = {
     "What is the capital of Japan?": {
@@ -355,9 +370,9 @@ while True:
             "A": "Salsa",
             "B": "Waltz",
             "C": "Tango",
-            "D": "Rumba"
+            "D": "Rock"
         },
-        "answer": "RUMBA"
+        "answer": "ROCK"
     },
     "Which of the following is a type of pasta?": {
         "IndexNum": 13,
@@ -414,7 +429,7 @@ while True:
         "choices": {
             "A": "Cucumber",
             "B": "Eggplant",
-            "C": "Tomato",
+            "C": "Pumpkin",
             "D": "Strawberry"
         },
         "answer": "STRAWBERRY"
@@ -442,9 +457,11 @@ while True:
 }
     run_quiz(quiz)
     restart()
+  # Create a Quiz
   elif user_selection == "2":
     create_quiz()
     break
+  # Import a Quiz
   elif user_selection == "3":
     import_quiz()
     run_quiz(quiz)
