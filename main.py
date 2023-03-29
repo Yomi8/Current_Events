@@ -58,6 +58,14 @@ def export_quiz(quiz):
     except:
       print("Export was not successful, retrying")
 
+def print_high_scores(quiz):
+  # High score dictionary
+  high_scores = quiz['scores']
+  if high_scores:
+      for username, score in high_scores.items():
+        print(f"{username} - {score}")
+  else:
+    print("There are no high scores to display.")
 def create_quiz():
   # Title function
   def quiz_creater_title(num, total):
@@ -218,7 +226,9 @@ def run_quiz(quiz):
           else:
             print("Your response was not any of the choices listed, please try again by choosing one of the choices listed.")
 
-  # User Score
+  # User Score and other high scores
+
+
   quiz_player_title()
   print(f"You scored {score} out of {len(quiz)-1} questions!")
   print("\nWould you like to save your score to the quiz?")
@@ -228,10 +238,14 @@ def run_quiz(quiz):
       username = str(input("Please enter your name: " ))
       quiz['scores'][username] = score
       export_quiz(quiz)
+      print("Current High Scores:")
+      print_high_scores(quiz)
       break
     if score_input == "n":
+      print("Current High Scores:")
+      print_high_scores(quiz)
       print("Skipping score saving...")
-      time.sleep(2)
+      time.sleep(4)
       break
     else:
        print("Invalid input! Please enter a valid input (y/n).") 
@@ -239,34 +253,36 @@ def run_quiz(quiz):
 
 
 
-
-# Main routine
-clearscrn()
-print("  _.--,-```-.    ")
-print(" /    /      '.  ")
-print("/____/         ; ")
-print("\    \  .``-    '")
-print(" \ ___\/    \   :")
-print("       \    :   |")
-print("       |    ;  . ")
-print("      ;   ;   :  ")
-print("     /   :   :   ")
-print("     `---'.  |   ")
-print("      `--..`;    ")
-print("    .--,_        ")
-print("    |    |`.     ")
-print("    `-- -`, ;    ")
-print("      '---``     ")
-print("#*#*#*# Quizzing #*#*#*#")
-print("OPTIONS")
-print("1 - Play the default quiz")
-print("2 - Create a new quiz")
-print("3 - Import and play an existing quiz")
-
-
 while True:
+  # Main routine
+  clearscrn()
+  print("  _.--,-```-.    ")
+  print(" /    /      '.  ")
+  print("/____/         ; ")
+  print("\    \  .``-    '")
+  print(" \ ___\/    \   :")
+  print("       \    :   |")
+  print("       |    ;  . ")
+  print("      ;   ;   :  ")
+  print("     /   :   :   ")
+  print("     `---'.  |   ")
+  print("      `--..`;    ")
+  print("    .--,_        ")
+  print("    |    |`.     ")
+  print("    `-- -`, ;    ")
+  print("      '---``     ")
+  print("#*#*#*# Quizzing #*#*#*#")
+  print("OPTIONS")
+  print("1 - Play the default quiz")
+  print("2 - Create a new quiz")
+  print("3 - Import and play an existing quiz")
+  print("4 - Import and view the high scores of a quiz")
+  print("5 - Exit")
+  
+  
+  
   # User selection of choice
-  user_selection = input("\nYour selection (1/2/3): ")
+  user_selection = input("\nYour selection (1/2/3/4/5): ")
   # Selection outputs
   # Default Quiz
   if user_selection == "1":
@@ -487,5 +503,13 @@ while True:
     run_quiz(quiz)
     restart()
     break
+  elif user_selection == "4":
+    import_quiz()
+    clearscrn()
+    print("High Scores for this quiz:")
+    print_high_scores(quiz)
+    time.sleep(10)
+  elif user_selection == "5":
+    exit()
   else:
     print("Invaild Input. Please try again with a correct input.")
