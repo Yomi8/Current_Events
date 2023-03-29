@@ -79,6 +79,8 @@ def create_quiz():
   # Quiz variable setup
   global quiz
   quiz = {}
+  # Quiz name input
+  quiz_name = input("Please enter a name for this quiz: ")
   # Number of questions input
   while True:
     try:
@@ -115,13 +117,16 @@ def create_quiz():
           # Get the index letter corresponding to the answer value
           correct_choice = [key for key, value in lettered_choices_upper.items() if value == answer][0]
           # Organizes inputs into main quiz dictionary
-          quiz[question] = {"IndexNum": i+1, "choices": lettered_choices, "answer": correct_choice, "scores": {}}
+
+          quiz[question] = {"IndexNum": i+1, "choices": lettered_choices, "answer": correct_choice}
+          quiz['scores'] = {}
+          quiz['name'] = quiz_name
           break
         else:
           print("The answer key is not one of the answer choices given. Please try again.")
         
   # User decides outcome for quiz
-  quiz_creater_title()
+  quiz_creater_title(None,None)
   print("Quiz creation successful!")
   print("What would you like to do?")
   print("1 - Save quiz to file")
@@ -156,11 +161,12 @@ def create_quiz():
 
 def run_quiz(quiz):
   # Title function
-  def quiz_player_title():
+  def quiz_player_title(quiz_name):
     clearscrn()
-    print("#*#*#*# Quiz Player #*#*#*#")
+    print(f"#*#*#*# {quiz_name} #*#*#*#")
 
   # Initialize variables
+  quiz_name = quiz['name']
   score = 0
   last_answer = None
 
@@ -168,14 +174,15 @@ def run_quiz(quiz):
   question_list = list(quiz.keys())
   question_data_list = list(quiz.values())
   question_list.remove('scores')
+  question_list.remove('name')
   # Repeat for every question
   for question in question_list:
     # Title and last answer printout
     if last_answer is not None:
-      quiz_player_title()
+      quiz_player_title(quiz_name)
       print(f"Last answer was {last_answer}")
     else:
-      quiz_player_title()
+      quiz_player_title(quiz_name)
 
     # Setup of variables for use later
     # Creates seperate dictionaries and variables for contents of quiz lists
@@ -489,7 +496,8 @@ while True:
     },
     "scores": {
       
-    }
+    },
+    "name": "Default Quiz"
 }
     run_quiz(quiz)
     restart()
