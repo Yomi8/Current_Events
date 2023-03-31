@@ -10,6 +10,7 @@
 import json
 import os, sys, time
 import re
+import shutil
 
 # functions
 def clearscrn():
@@ -61,11 +62,13 @@ def export_quiz(quiz):
 def print_high_scores(quiz):
   # High score dictionary
   high_scores = quiz['scores']
-  if high_scores:
-      for username, score in high_scores.items():
+  sorted_scores = dict(sorted(high_scores.items(), key=lambda item: item[1], reverse=True))
+  if sorted_scores:
+      for username, score in sorted_scores.items():
         print(f"{username} - {score}")
   else:
     print("There are no high scores to display.")
+  input("Press enter to continue: ")
 def create_quiz():
   # Title function
   def quiz_creater_title(num, total):
@@ -163,7 +166,10 @@ def run_quiz(quiz):
   # Title function
   def quiz_player_title(quiz_name):
     clearscrn()
-    print(f"#*#*#*# {quiz_name} #*#*#*#")
+    if quiz_name is None:
+      print("#*#*#*# Quiz Player #*#*#*#")
+    else:
+      print(f"#*#*#*# {quiz_name} #*#*#*#")
 
   # Initialize variables
   quiz_name = quiz['name']
@@ -175,8 +181,10 @@ def run_quiz(quiz):
   question_data_list = list(quiz.values())
   question_list.remove('scores')
   question_list.remove('name')
+  
   # Repeat for every question
-  for question in question_list:
+  for question in question_list:\
+    
     # Title and last answer printout
     if last_answer is not None:
       quiz_player_title(quiz_name)
@@ -208,34 +216,38 @@ def run_quiz(quiz):
     # User answer and checking
     while True:
         user_answer = input(f"\nSelect your answer ({letter_index_output}):").upper()
+    
         # Checks user input against answer dictionary
         # Index answer (Correct)
         if user_answer in answer:
-          last_answer = "correct!"
+          last_answer = "\033[32;49mcorrect\u001b[37m!"
           score += 1
           break
+        
         # Long answer (Correct)
         elif user_answer in answer.values():
-          last_answer = "correct!"
+          last_answer = "\033[32;49mcorrect\u001b[37m!"
           score += 1
           break
+        
         # Answer is not correct
         elif user_answer not in answer:
+        
           # Same as index choices (Incorrect)
           if user_answer in upper_choices:
-            last_answer = "incorrect!"
+            last_answer = "\033[31;49mincorrect\u001b[37m!"
             break
+          
           # Same as long answer choices (Incorrect)
           elif user_answer in upper_choices.values():
-            last_answer = "incorrect!"
+            last_answer = "\033[31;49mincorrect\u001b[37m!"
             break
+          
           # Not the same as anything provided (Error)
           else:
             print("Your response was not any of the choices listed, please try again by choosing one of the choices listed.")
 
   # User Score and other high scores
-
-
   quiz_player_title()
   print(f"You scored {score} out of {len(quiz)-1} questions!")
   print("\nWould you like to save your score to the quiz?")
@@ -252,7 +264,6 @@ def run_quiz(quiz):
       print("Current High Scores:")
       print_high_scores(quiz)
       print("Skipping score saving...")
-      time.sleep(4)
       break
     else:
        print("Invalid input! Please enter a valid input (y/n).") 
@@ -263,33 +274,48 @@ def run_quiz(quiz):
 while True:
   # Main routine
   clearscrn()
-  print("  _.--,-```-.    ")
-  print(" /    /      '.  ")
-  print("/____/         ; ")
-  print("\    \  .``-    '")
-  print(" \ ___\/    \   :")
-  print("       \    :   |")
-  print("       |    ;  . ")
-  print("      ;   ;   :  ")
-  print("     /   :   :   ")
-  print("     `---'.  |   ")
-  print("      `--..`;    ")
-  print("    .--,_        ")
-  print("    |    |`.     ")
-  print("    `-- -`, ;    ")
-  print("      '---``     ")
-  print("#*#*#*# Quizzing #*#*#*#")
-  print("OPTIONS")
-  print("1 - Play the default quiz")
-  print("2 - Create a new quiz")
-  print("3 - Import and play an existing quiz")
-  print("4 - Import and view the high scores of a quiz")
-  print("5 - Exit")
+  # Logo and option strings
+  logo = '''
+    _.--,-```-.    
+   /    /      '.  
+  /____/         ; 
+  \    \  .``-    '
+   \ ___\/    \   :
+         \    :   |
+         |    ;  . 
+        ;   ;   :  
+       /   :   :   
+       `---'.  |   
+        `--..`;    
+      .--,_        
+      |    |`.     
+      `-- -`, ;    
+        '---``     
+  '''
+  options = '''
+  #*#*#*# Quizzing #*#*#*#
+  OPTIONS
   
-  
-  
+  1 - Play the default quiz
+  2 - Create a new quiz
+  3 - Import and play an existing quiz
+  4 - Import and view the high scores of an existing quiz
+  5 - Exit
+  '''
+  # Get the width of the comsole window
+  terminal_width = shutil.get_terminal_size().columns
+
+  # Calculate the number of spaces needed to center the logo and options
+  spaces_logo = (terminal_width - max(len(line) for line in logo.split('\n'))) // 2
+  spaces_options = (terminal_width - max(len(line) for line in options.split('\n'))) // 2
+
+  # Print the logo and options with the calculated spaces
+  print(' ' * spaces_logo + logo)
+  print(' ' * spaces_options + options)
+
   # User selection of choice
-  user_selection = input("\nYour selection (1/2/3/4/5): ")
+  user_selection = input("\n  Your selection (1/2/3/4/5): ")
+
   # Selection outputs
   # Default Quiz
   if user_selection == "1":
@@ -495,28 +521,36 @@ while True:
         "answer": "STEVEN SPIELBURG"
     },
     "scores": {
-      
+      "Cam": 19,
+      "ethcor2": 16,
+      "Jess": 8,
+      "Artemis": 20
     },
     "name": "Default Quiz"
 }
     run_quiz(quiz)
     restart()
+  
   # Create a Quiz
   elif user_selection == "2":
     create_quiz()
     break
-  # Import a Quiz
+  
+  # Import and play a quiz
   elif user_selection == "3":
     import_quiz()
     run_quiz(quiz)
     restart()
     break
+  
+  # Import and view scores of a quiz
   elif user_selection == "4":
     import_quiz()
     clearscrn()
     print("High Scores for this quiz:")
     print_high_scores(quiz)
-    time.sleep(10)
+  
+  # Exit program
   elif user_selection == "5":
     exit()
   else:

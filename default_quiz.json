@@ -1,5 +1,4 @@
 {
-    "name": "Defualt Quiz"
     "What is the capital of Japan?": {
         "IndexNum": 1,
         "choices": {
@@ -199,5 +198,12 @@
             "D": "Francis Ford Coppola"
         },
         "answer": "STEVEN SPIELBURG"
-    }
+    },
+    "scores": {
+      "Cam": 19,
+      "ethcor2": 16,
+      "Jess": 8,
+      "Artemis": 20
+    },
+    "name": "Defualt Quiz"
 }
