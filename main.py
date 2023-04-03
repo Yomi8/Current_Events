@@ -15,6 +15,7 @@ import shutil
 
 # functions
 def clearscrn():
+  # Clear console screen
   os.system('cls' if os.name == 'nt' else 'clear')
 
 
@@ -25,135 +26,156 @@ def restart():
 
 
 def user_input(prompt):
+  # User input with confirmation
   while True:
     user_answer = input(prompt)
     confirm = str(
-      input(f"You entered '{user_answer}'. Is this correct? (y/n): "))
+      input(f"   You entered '{user_answer}'. Is this correct? (y/n): "))
     while confirm.lower() not in ["y", "n"]:
-      print("Invalid input. Please enter 'y' or 'n'.")
-      confirm = input("Is this correct? (y/n): ")
+      print("   Invalid input. Please enter 'y' or 'n'.")
+      confirm = input("   Is this correct? (y/n): ")
     if confirm.lower() == "y":
       break
   return user_answer
 
 
 def import_quiz():
+  # Import quiz from existing JSON file
   global quiz
+  
   # Title
   clearscrn()
-  print("#*#*#*# Importing #*#*#*#")
+  print("   #*#*#*# Importing #*#*#*#")
   while True:
+    
     # User instructions
-    print("Please enter the file name of your quiz file")
-    print("Make sure the file is in the same folder as this python script.")
+    print("   Please enter the file name of your quiz file")
+    print("   Make sure the file is in the same folder as this python script.")
     filename = input().lower()
     try:
+      
       # Try to open filename provided
       with open(f'{filename}.json') as file:
         json_data = file.read()
       quiz = json.loads(json_data)
       break
     except (NameError, FileNotFoundError):
-      # User error printout
       print(
-        "The quiz file was not found. Please try again and make sure you spelled the file name correctly and the file is in the right folder."
+        "   The quiz file was not found. Please try again and make sure you spelled the file name correctly and the file is in the right folder."
       )
 
 
 def export_quiz(quiz):
+  # Export quiz to JSON file
+  # Title
   clearscrn()
-  print("#*#*#*# Exporting #*#*#*#")
+  print("   #*#*#*# Exporting #*#*#*#")
+
   while True:
-    print("Exporting...")
+    # JSON file
+    print("   Exporting...")
     time.sleep(1)
     try:
       jsonstr = json.dumps(quiz)
       file = open("quiz.json", "w")
       file.write(jsonstr)
       file.close()
-      print("Export Successful!")
-      print("File saved as quiz.json")
+      print("   Export Successful!")
+      print("   File saved as quiz.json")
       time.sleep(2)
       break
     except:
-      print("Export was not successful, retrying")
-
+      print("   Export was not successful, retrying")
 
 def print_high_scores(quiz):
-  # High score dictionary
+  # Prints high scores of a quiz
   high_scores = quiz['scores']
   sorted_scores = dict(
     sorted(high_scores.items(), key=lambda item: item[1], reverse=True))
   if sorted_scores:
     for username, score in sorted_scores.items():
-      print(f"{username} - {score}")
+      print(f"   {username} - {score}")
   else:
-    print("There are no high scores to display.")
-  input("Press enter to continue: ")
+    print("   There are no high scores to display.")
+  input("   Press enter to continue: ")
 
 
 def create_quiz():
+  # Creates quiz from user input
   # Title function
   def quiz_creater_title(num, total):
     clearscrn()
     if num is not None:
-      print("#*#*#*# Quiz Creator #*#*#*#")
-      print(f"Question {num+1} out of {total}")
+      print("   #*#*#*# Quiz Creator #*#*#*#")
+      print(f"   Question {num+1} out of {total}")
     else:
-      print("#*#*#*# Quiz Creator #*#*#*#")
+      print("   #*#*#*# Quiz Creator #*#*#*#")
 
   quiz_creater_title(None, None)
-  # Quiz variable setup
+  
+  # Initialize quiz variable
   global quiz
   quiz = {}
+  
   # Quiz name input
-  quiz_name = user_input("Please enter a name for this quiz: ")
+  quiz_name = user_input("   Please enter a name for this quiz: ")
+  
   # Number of questions input
   while True:
     try:
       question_amount = int(
-        input("How many questions do you want in your quiz? "))
+        input("   How many questions do you want in your quiz? "))
       break
     except (ValueError):
-      print("Please enter an appropriate value, (e.g. 1, 10, 17)")
+      print("   Please enter an appropriate value, (e.g. 1, 10, 17)")
+
   # Loops for the amount of questions a user wants
   for i in range(question_amount):
+
     # Title
     quiz_creater_title(i, question_amount)
+    
     # Asks user for question
-    question = user_input(f"Enter question {i+1}: ")
+    question = user_input(f"   Enter question {i+1}: ")
+    
     # Asks user for choices for question
     while True:
       choices = re.sub(
         r',\s+', ',',
         user_input(
-          f"Enter the answer choices for question {i+1}, separated by commas: "
+          f"   Enter the answer choices for question {i+1}, separated by commas: "
         )).split(",")
       if len(choices) > 26:
         print(
-          "You have entered more than 26 choices which means each choice cannot be assigned it's own letter. Please consider lowering the amount of choices in this particular question and try again."
+          "   You have entered more than 26 choices which means each choice cannot be assigned it's own letter. Please consider lowering the amount of choices in this particular question and try again."
         )
       else:
         break
     lettered_choices = {}
+    
     # Gives an index letter (A - Z) for each choice
     for index, choice in enumerate(choices):
       lettered_choices[chr(ord('A') + index)] = choice.strip()
     while True:
+      
       # Asks user for correct answer to question
       answer = user_input(
-        f"What is the correct answer for question {i+1}? ").strip().upper()
+        f"   What is the correct answer for question {i+1}? ").strip().upper()
+      
       # Copies lettered choices dictionary and makes copy uppercase for answer checking
       lettered_choices_upper = lettered_choices.copy()
       for key in lettered_choices:
         lettered_choices_upper[key] = lettered_choices[key].upper()
+        
       # Check if the answer key is in the lettered_choices_upper dictionary
       if answer in lettered_choices_upper.values():
+        
         # Get the index letter corresponding to the answer value
         correct_choice = [
           key for key, value in lettered_choices_upper.items()
           if value == answer
         ][0]
+        
         # Organizes inputs into main quiz dictionary
 
         quiz[question] = {
@@ -166,7 +188,7 @@ def create_quiz():
         break
       else:
         print(
-          "The answer key is not one of the answer choices given. Please try again."
+          "   The answer key is not one of the answer choices given. Please try again."
         )
 
   # User decides outcome for quiz
@@ -179,7 +201,7 @@ def create_quiz():
   print("4 - Discard quiz")
 
   while True:
-    user_selection = input("Selection (1/2/3/4): ")
+    user_selection = input("   Selection (1/2/3/4): ")
     if user_selection == "1":
       export_quiz(quiz)
       break
@@ -190,27 +212,28 @@ def create_quiz():
     elif user_selection == "3":
       run_quiz(quiz)
       quiz = {}
-      print("Quiz has been removed from memory")
+      print("   Quiz has been removed from memory")
       time.sleep(2)
       break
     elif user_selection == "4":
       quiz = {}
-      print("Quiz has been removed from memory")
+      print("   Quiz has been removed from memory")
       time.sleep(2)
       break
     else:
-      print("No valid selection was chosen. Please try again.")
+      print("   No valid selection was chosen. Please try again.")
   restart()
 
 
 def run_quiz(quiz):
+  # Runs existing quiz
   # Title function
   def quiz_player_title(quiz_name):
     clearscrn()
     if quiz_name is None:
-      print("#*#*#*# Quiz Player #*#*#*#")
+      print("   #*#*#*# Quiz Player #*#*#*#")
     else:
-      print(f"#*#*#*# {quiz_name} #*#*#*#")
+      print(f"   #*#*#*# {quiz_name} #*#*#*#")
 
   # Initialize variables
   quiz_name = quiz['name']
@@ -229,7 +252,7 @@ def run_quiz(quiz):
     # Title and last answer printout
     if last_answer is not None:
       quiz_player_title(quiz_name)
-      print(f"Last answer was {last_answer}")
+      print(f"   Last answer was {last_answer}")
     else:
       quiz_player_title(quiz_name)
 
