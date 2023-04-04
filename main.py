@@ -266,7 +266,7 @@ def run_quiz(quiz):
         # User answer and checking
         while True:
             user_answer = input(
-                f"\n   Select your answer ({letter_index_output}):").upper()
+                f"\n   Select your answer ({letter_index_output}): ").upper()
 
             # Checks user input against answer dictionary
             # Index answer (Correct)
@@ -296,12 +296,12 @@ def run_quiz(quiz):
 
                 # Not the same as anything provided (Error)
                 else:
-                    print("   Your response was not any of the choices listed, "
-                          "   please try again by choosing one of the choices listed.")
+                    print("   Your response was not any of the choices listed, ")
+                    print("   please try again by choosing one of the choices listed.")
 
     # User Score and other high scores
     quiz_player_title(quiz_name)
-    print(f"You scored {score} out of {len(quiz)-1} questions!")
+    print(f"You scored {score} out of {len(quiz)-2} questions!")
     print("\nWould you like to save your score to the quiz?")
     
     while True:
@@ -487,9 +487,9 @@ while True:
             "A": "Salsa",
             "B": "Waltz",
             "C": "Tango",
-            "D": "Rumba"
+            "D": "Roomba"
         },
-        "answer": "RUMBA"
+        "answer": "ROOMBA"
     },
     "Which of the following is a type of pasta?": {
         "IndexNum": 13,
@@ -546,7 +546,7 @@ while True:
         "choices": {
             "A": "Cucumber",
             "B": "Eggplant",
-            "C": "Tomato",
+            "C": "Pumpkin",
             "D": "Strawberry"
         },
         "answer": "STRAWBERRY"
@@ -606,3 +606,4 @@ while True:
         exit()
     else:
         print("Invalid Input. Please try again with a correct input.")
+        time.sleep(2)
