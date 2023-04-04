@@ -49,13 +49,15 @@ def import_quiz():
         # User instructions
         print("   Please enter the file name of your quiz file")
         print("   Make sure the file is in the same folder as this python script.")
-        filename = input().lower()
+        filename = input("   ").lower()
         try:
 
             # Try to open filename provided
             with open(f'{filename}.json') as file:
                 json_data = file.read()
             quiz = json.loads(json_data)
+            print("   Import Successful!")
+            time.sleep(2)
             break
         except (NameError, FileNotFoundError):
             print(
@@ -80,7 +82,7 @@ def export_quiz(quiz):
             file.close()
             print("   Export Successful!")
             print("   File saved as quiz.json")
-            time.sleep(2)
+            time.sleep(3)
             break
         except:
             print("   Export was not successful, retrying")
